@@ -16,18 +16,16 @@ RUN pip install uv
 
 # --- Copy app to container ---
 WORKDIR /app
-
 COPY . .
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONIOENCODING=utf-8
 
-# --- Install project dependencies using uv ---
+# --- Install dependencies from pyproject.toml ---
 RUN uv sync --frozen
 
-# HuggingFace Spaces exposes port 7860
+# Expose port (Render/HF use dynamic ports anyway)
 EXPOSE 7860
 
-# --- Run your FastAPI app ---
-# uvicorn must be in pyproject dependencies
+# --- Start FastAPI ---
 CMD uvicorn main:app --host 0.0.0.0 --port ${PORT}
