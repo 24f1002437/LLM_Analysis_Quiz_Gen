@@ -23,10 +23,13 @@ ENV PYTHONIOENCODING=utf-8
 
 # --- Install dependencies from pyproject.toml ---
 RUN uv sync --frozen
+RUN pip install uvicorn
+
 
 # Expose port (Render/HF use dynamic ports anyway)
 EXPOSE 7860
 
 # --- Start FastAPI ---
 # --- Run FastAPI inside uv environment ---
-CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "${PORT}"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
+
