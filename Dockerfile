@@ -30,4 +30,4 @@ EXPOSE 7860
 
 # --- Run your FastAPI app ---
 # uvicorn must be in pyproject dependencies
-CMD ["uv", "run", "main.py"]
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT}
