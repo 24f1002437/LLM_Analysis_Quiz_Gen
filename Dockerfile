@@ -28,4 +28,5 @@ RUN uv sync --frozen
 EXPOSE 7860
 
 # --- Start FastAPI ---
-CMD uvicorn main:app --host 0.0.0.0 --port ${PORT}
+# --- Run FastAPI inside uv environment ---
+CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "${PORT}"]
