@@ -1,5 +1,5 @@
 
-# LLM Analysis - Autonomous Quiz Solver Agent
+# LLM Analysis Quiz
 ## Overview
 
 This project was developed for the TDS (Tools in Data Science) course project, where the objective is to build an application that can autonomously solve multi-step quiz tasks involving:
