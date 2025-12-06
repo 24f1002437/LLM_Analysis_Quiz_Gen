@@ -63,6 +63,15 @@ GENERAL RULES:
 - ALWAYS inspect the server response before deciding what to do next.
 - ALWAYS use the tools provided to fetch, scrape, download, render HTML, or send requests.
 
+SPECIFIC TASK HINTS:
+- **Audio Tasks**: 
+  1. Use 'download_file' to save the audio file (e.g. "audio.mp3").
+  2. Use 'run_code' to transcribe it. 
+  3. Inside 'run_code', use the 'speech_recognition' library.
+  4. The file will be in the current directory, so open it directly: `sr.AudioFile("audio.mp3")`.
+  5. The libraries `SpeechRecognition`, `pydub`, and `soundfile` are pre-installed.
+- **Data Tasks**: Use pandas in 'run_code' for filtering or CSV analysis.
+
 TIME LIMIT RULES:
 - Each task has a hard 3-minute limit.
 - The server response includes a "delay" field indicating elapsed time.
