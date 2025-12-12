@@ -6,7 +6,6 @@ from agent import run_agent
 from dotenv import load_dotenv
 import uvicorn
 import os
-from shared_store import url_time, BASE64_STORE
 import time
 
 load_dotenv()
@@ -31,7 +30,7 @@ def healthz():
         "uptime_seconds": int(time.time() - START_TIME)
     }
 
-@app.post("/solve")
+@app.post("/quiz")
 async def solve(request: Request, background_tasks: BackgroundTasks):
     try:
         data = await request.json()
@@ -46,16 +45,14 @@ async def solve(request: Request, background_tasks: BackgroundTasks):
     
     if secret != SECRET:
         raise HTTPException(status_code=403, detail="Invalid secret")
-    url_time.clear() 
-    BASE64_STORE.clear()  
     print("Verified starting the task...")
-    os.environ["url"] = url
-    os.environ["offset"] = "0"
-    url_time[url] = time.time()
     background_tasks.add_task(run_agent, url)
 
     return JSONResponse(status_code=200, content={"status": "ok"})
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+    import os
+    port = int(os.getenv("PORT", 7860))  # default to 7860 locally
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
