@@ -2,6 +2,17 @@ from langchain_core.tools import tool
 import requests
 import os
 
+def github_headers(url: str):
+    if "github.com" in url:
+        token = os.getenv("GITHUB_TOKEN")
+        if token:
+            return {
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/vnd.github+json"
+            }
+    return {}
+
+
 @tool
 def download_file(url: str, filename: str) -> str:
     """
@@ -16,7 +27,8 @@ def download_file(url: str, filename: str) -> str:
         str: Full path to the saved file.
     """
     try:
-        response = requests.get(url, stream=True)
+        headers = github_headers(url)
+        response = requests.get(url, headers=headers, stream=True)
         response.raise_for_status()
         directory_name = "LLMFiles"
         os.makedirs(directory_name, exist_ok=True)
